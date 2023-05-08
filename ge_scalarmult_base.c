@@ -89,10 +89,7 @@ static void ge_scalarmult(ge_p3 *r,const ge_p3 *p,const unsigned char *s)
   ge_p1p1 tp1p1;
 
   // Precomputation
-  fe_0(neutral.X);
-  fe_1(neutral.Y);
-  fe_1(neutral.Z);
-  fe_0(neutral.T);
+  ge_p3_0(&neutral);
   *r = neutral;
 
   // Scalar multiplication
