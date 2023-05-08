@@ -6,6 +6,12 @@ h = 0
 
 void fe_0(fe h)
 {
+#if CRYPTO_SHRINK
+  int i;
+
+  for (i = 0;i < 10;++i)
+    h[i] = 0;
+#else
   h[0] = 0;
   h[1] = 0;
   h[2] = 0;
@@ -16,4 +22,5 @@ void fe_0(fe h)
   h[7] = 0;
   h[8] = 0;
   h[9] = 0;
+#endif
 }

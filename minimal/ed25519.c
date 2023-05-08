@@ -2,10 +2,13 @@
 #define CRYPTO_NAMESPACE(s) s
 #endif
 
+#define CRYPTO_SHRINK 1
+
 #include "api.h"
 #include "fe_0.c"
 #include "fe_1.c"
 #include "fe_add.c"
+#include "fe_carry.c"
 #include "fe_cmov.c"
 #include "fe_copy.c"
 #include "fe_cswap.c"
@@ -49,6 +52,8 @@
 #define load_3 load_3_reduce
 #define load_4 load_4_reduce
 #include "sc_reduce.c"
+#include "sc_reduce_carry.c"
+#include "sc_reduce_internal.c"
 #include "keypair.c"
 #include "open.c"
 #include "scalarmult.c"
