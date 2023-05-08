@@ -28,13 +28,13 @@ static unsigned char negative(signed char b)
   return x;
 }
 
-/* Constant-time version of: if(b) r = p */
-static void cmov_p3(ge_p3 *r,const ge_p3 *p,unsigned char b)
+/* Constant-time version of: r = b ? p : q */
+static void cmov_p3(ge_p3 *r,const ge_p3 *p,const ge_p3 *q,unsigned char b)
 {
-  fe_cmov(r->X,p->X,b);
-  fe_cmov(r->Y,p->Y,b);
-  fe_cmov(r->Z,p->Z,b);
-  fe_cmov(r->T,p->T,b);
+  fe_copy(r->X,b?p->X:q->X);
+  fe_copy(r->Y,b?p->Y:q->Y);
+  fe_copy(r->Z,b?p->Z:q->Z);
+  fe_copy(r->T,b?p->T:q->T);
 }
 
 static void cmov(ge_precomp *t,const ge_precomp *u,unsigned char b)
@@ -97,8 +97,7 @@ static void ge_scalarmult(ge_p3 *r,const ge_p3 *p,const unsigned char *s)
   {
     ge_p2_dbl(&tp1p1,(ge_p2 *)r);
     ge_p1p1_to_p3(r,&tp1p1);
-    t = neutral;
-    cmov_p3(&t,p,(s[i/8]>>(i&7))&1);
+    cmov_p3(&t,p,&neutral,(s[i/8]>>(i&7))&1);
     ge_p3_to_cached(&tc,&t);
     ge_add(&tp1p1,r,&tc);
     if((i&7)!=0) ge_p1p1_to_p2((ge_p2 *)r,&tp1p1);
