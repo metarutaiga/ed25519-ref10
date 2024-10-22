@@ -9,6 +9,18 @@ Preconditions: b in {0,1}.
 
 void fe_cswap(fe f,fe g,unsigned int b)
 {
+#if CRYPTO_SHRINK
+  int i;
+
+  b = -b;
+
+  for (i = 0;i < 10;++i)
+  {
+    crypto_int32 x = (f[i] ^ g[i]) & b;
+    f[i] ^= x;
+    g[i] ^= x;
+  }
+#else
   crypto_int32 f0 = f[0];
   crypto_int32 f1 = f[1];
   crypto_int32 f2 = f[2];
@@ -70,4 +82,5 @@ void fe_cswap(fe f,fe g,unsigned int b)
   g[7] = g7 ^ x7;
   g[8] = g8 ^ x8;
   g[9] = g9 ^ x9;
+#endif
 }

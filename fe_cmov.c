@@ -9,6 +9,14 @@ Preconditions: b in {0,1}.
 
 void fe_cmov(fe f,const fe g,unsigned int b)
 {
+#if CRYPTO_SHRINK
+  int i;
+
+  b = -b;
+
+  for (i = 0;i < 10;++i)
+    f[i] ^= (f[i] ^ g[i]) & b;
+#else
   crypto_int32 f0 = f[0];
   crypto_int32 f1 = f[1];
   crypto_int32 f2 = f[2];
@@ -60,4 +68,5 @@ void fe_cmov(fe f,const fe g,unsigned int b)
   f[7] = f7 ^ x7;
   f[8] = f8 ^ x8;
   f[9] = f9 ^ x9;
+#endif
 }
