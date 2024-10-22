@@ -2,13 +2,12 @@
 #include "crypto_uint32.h"
 
 /* Packed coordinates of the base point */
-static const unsigned char ge25519_base_x[32] = {0x1A, 0xD5, 0x25, 0x8F, 0x60, 0x2D, 0x56, 0xC9, 0xB2, 0xA7, 0x25, 0x95, 0x60, 0xC7, 0x2C, 0x69,
-                                                 0x5C, 0xDC, 0xD6, 0xFD, 0x31, 0xE2, 0xA4, 0xC0, 0xFE, 0x53, 0x6E, 0xCD, 0xD3, 0x36, 0x69, 0x21};
-static const unsigned char ge25519_base_y[32] = {0x58, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66,
-                                                 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66};
-static const unsigned char ge25519_base_z[32] = {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-static const unsigned char ge25519_base_t[32] = {0xA3, 0xDD, 0xB7, 0xA5, 0xB3, 0x8A, 0xDE, 0x6D, 0xF5, 0x52, 0x51, 0x77, 0x80, 0x9F, 0xF0, 0x20,
-                                                 0x7D, 0xE3, 0xAB, 0x64, 0x8E, 0x4E, 0xEA, 0x66, 0x65, 0x76, 0x8B, 0xD7, 0x0F, 0x5F, 0x87, 0x67};
+static const ge_p3 ge25519_base = {
+  { -14297830, -7645148, 16144683, -16471763, 27570974, -2696100, -26142465, 8378389, 20764389, 8758491 },
+  { -26843541, -6710886, 13421773, -13421773, 26843546, 6710886, -13421773, 13421773, -26843546, -6710886 },
+  { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+  { 28827062, -6116119, -27349572, 244363, 8635006, 11264893, 19351346, 13413597, 16611511, -6414980 },
+};
 
 static unsigned char equal(signed char b,signed char c)
 {
@@ -109,12 +108,7 @@ void ge_scalarmult_base(ge_p3 *h,const unsigned char *a)
 {
 #if CRYPTO_SHRINK
   /* XXX: Better algorithm for known-base-point scalar multiplication */
-  ge_p3 base;
-  fe_frombytes(base.X, ge25519_base_x);
-  fe_frombytes(base.Y, ge25519_base_y);
-  fe_frombytes(base.Z, ge25519_base_z);
-  fe_frombytes(base.T, ge25519_base_t);
-  ge_scalarmult(h,&base,a);
+  ge_scalarmult(h,&ge25519_base,a);
 #else
   signed char e[64];
   signed char carry;
