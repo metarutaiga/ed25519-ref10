@@ -3,4 +3,4 @@
 |option|size |
 |------|-----|
 |normal|46984|
-|shrink|12992|
+|shrink|12952|
