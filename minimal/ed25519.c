@@ -25,7 +25,6 @@
 #include "fe_sub.c"
 #include "fe_tobytes.c"
 #include "ge_add.c"
-#include "ge_double_scalarmult.c"
 #include "ge_frombytes.c"
 #include "ge_madd.c"
 #include "ge_msub.c"
@@ -39,9 +38,10 @@
 #include "ge_p3_to_p2.c"
 #include "ge_p3_tobytes.c"
 #include "ge_precomp_0.c"
-#include "ge_scalarmult_base.c"
 #include "ge_sub.c"
 #include "ge_tobytes.c"
+#include "ge_scalarmult_base.c"
+#include "ge_double_scalarmult.c"
 #undef load_3
 #undef load_4
 #define load_3 load_3_muladd

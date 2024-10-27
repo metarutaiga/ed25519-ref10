@@ -80,12 +80,11 @@ Preconditions:
 
 static void ge_scalarmult(ge_p3 *r,const ge_p3 *p,const unsigned char *s)
 {
-  int i;
-
   ge_p3 neutral;
   ge_p3 t;
   ge_cached tc;
   ge_p1p1 tp1p1;
+  int i;
 
   // Precomputation
   ge_p3_0(&neutral);
